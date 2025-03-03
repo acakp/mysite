@@ -59,6 +59,6 @@ func main() {
 
 	// to use https
 	// log.Fatal(http.ListenAndServeTLS(":443", "server.crt", "server.key", nil))
-	fmt.Println("Good luck! Server is running at :8081")
-	log.Fatal(http.ListenAndServe(":8081", nil))
+	fmt.Println("Good luck! Server is running at :8080")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
