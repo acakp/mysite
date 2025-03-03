@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Задача о бросании иголки</title>
+  </head>
+  <body>
+	<p>[<a href="/index">На главную</a>]  [<a href="https://github.com/acakp/needle-drop">github</a>]</p>
+	<h1>Бросание иголки</h1>
+	<ul>
+		<li>Расстояние между линиями: <textarea id="linesLen" rows="1" cols="5">40</textarea></li>
+		<li>Длина иглы: <textarea id="needleLen" rows="1" cols="5">30</textarea></li>
+		<li>Длина поля по Х: <textarea id="fieldLenX" rows="1" cols="5">800</textarea></li>
+		<li>Длина поля по Y: <textarea id="fieldLenY" rows="1" cols="5">800</textarea></li>
+		<li>Повторений эксперимента: <textarea id="iterations" rows="1" cols="5">30</textarea></li>
+
+	</ul>
+	<p><button id="submitButton">Посчитать</button></p>
+
+	<p>
+	<span id="crossings"></span><br>
+	<span id="crossingRate"></span>
+	</p>
+
+	<canvas id="field" width="10" height="10"></canvas>>	
+
+	<hr>
+
+	<div id="dropRes" style="font-family:monospace;"></div>
+
+	<script src="/drop.js"></script>
+
+  </body>
+</html>
