@@ -12,15 +12,15 @@ func dumbCalc(num int) int {
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "index.html")
+	http.ServeFile(w, r, "public/index.html")
 }
 
 func dropHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "drop.html")
+	http.ServeFile(w, r, "public/drop.html")
 }
 
 func dropJsHandler(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "drop.js")
+	http.ServeFile(w, r, "public/drop.js")
 }
 
 func calcHandler(w http.ResponseWriter, r *http.Request) {
@@ -52,6 +52,7 @@ func calcHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/index", indexHandler)
 	http.HandleFunc("/drop", dropHandler)
 	http.HandleFunc("/drop.js", dropJsHandler)
@@ -59,6 +60,6 @@ func main() {
 
 	// to use https
 	// log.Fatal(http.ListenAndServeTLS(":443", "server.crt", "server.key", nil))
-	fmt.Println("Good luck! Server is running at :8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	fmt.Println("Good luck! Server is running at :80")
+	log.Fatal(http.ListenAndServe(":80", nil))
 }
