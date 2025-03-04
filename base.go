@@ -59,7 +59,7 @@ func main() {
 	http.HandleFunc("/calculate", calcHandler)
 
 	// to use https
-	// log.Fatal(http.ListenAndServeTLS(":443", "server.crt", "server.key", nil))
-	fmt.Println("Good luck! Server is running at :80")
-	log.Fatal(http.ListenAndServe(":80", nil))
+	log.Fatal(http.ListenAndServeTLS(":443", "server.crt", "server.key", nil))
+	// fmt.Println("Good luck! Server is running at :80")
+	// log.Fatal(http.ListenAndServe(":80", nil))
 }
