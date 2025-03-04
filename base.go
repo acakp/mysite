@@ -7,10 +7,6 @@ import (
 	"net/http"
 )
 
-func dumbCalc(num int) int {
-	return num + 100
-}
-
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "public/index.html")
 }
@@ -23,7 +19,15 @@ func dropJsHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "public/drop.js")
 }
 
-func calcHandler(w http.ResponseWriter, r *http.Request) {
+func probHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "public/probability.html")
+}
+
+func probJsHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "public/probability.js")
+}
+
+func calcDropHandler(w http.ResponseWriter, r *http.Request) {
 	// parse json
 	var data struct {
 		LinesLen   float64 `json:"linesLen"`
@@ -51,15 +55,45 @@ func calcHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func calcProbHandler(w http.ResponseWriter, r *http.Request) {
+	type FormData struct {
+		Values       []string `json:"values"`
+		ValuesAmount []string `json:"valuesAmount"`
+	}
+
+	if r.Method == http.MethodPost {
+		var formData FormData
+		err := json.NewDecoder(r.Body).Decode(&formData)
+		if err != nil {
+			http.Error(w, "Error parsing JSON data", http.StatusBadRequest)
+			return
+		}
+
+		fmt.Println("Values:", formData.Values)
+		fmt.Println("ValuesAmount:", formData.ValuesAmount)
+
+		// Process the form data as needed
+		// ...
+
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprint(w, "Data received successfully")
+	} else {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	}
+}
+
 func main() {
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/index", indexHandler)
+
 	http.HandleFunc("/drop", dropHandler)
 	http.HandleFunc("/drop.js", dropJsHandler)
-	http.HandleFunc("/calculate", calcHandler)
+	http.HandleFunc("/calculateDrop", calcDropHandler)
 
-	// to use https
-	// log.Fatal(http.ListenAndServeTLS(":443", "server.crt", "server.key", nil))
+	http.HandleFunc("/probability", probHandler)
+	http.HandleFunc("/probability.js", probJsHandler)
+	http.HandleFunc("/calculateProbability", calcProbHandler)
+
 	fmt.Println("Good luck! Server is running at :80")
 	log.Fatal(http.ListenAndServe(":80", nil))
 }

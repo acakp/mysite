@@ -26,7 +26,7 @@ document.getElementById("submitButton").addEventListener("click", () => {
 	drawFieldLines(fc, data.linesLen, data.fieldLenX, data.fieldLenY);
 
 	// Send input to the server
-	fetch("/calculate", {
+	fetch("/calculateDrop", {
 		method: "POST",
 		headers: {"Content-Type":"application/json"},
 		body: jsonData

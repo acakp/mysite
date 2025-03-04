@@ -1,0 +1,93 @@
+document.getElementById("submitButton").addEventListener("click", () => {
+	const n = document.getElementById("n");
+	const k = document.getElementById("k");
+	const inputs = document.getElementById("inputs");
+	const submitButton = document.getElementById("submitButton");
+	const clearButton = document.getElementById("clearButton");
+
+	generateTextareas(n)
+
+	function generateTextareas(n) {
+      inputs.innerHTML = '';
+
+      for (let i = 0; i < n.value; i++) {
+        const li = document.createElement('li');
+        const input = document.createElement('input');
+        //input.type = 'text';
+        input.placeholder = `Р${i + 1}`;
+        li.appendChild(input);
+        li.appendChild(li);
+      }
+	}
+
+    function getTextareaValues() {
+      const textareas = document.querySelectorAll('.inputs input');
+      const values = Array.from(li).map(li => li.value);
+      return values;
+    }
+
+    function submitData() {
+      const values = getTextareaValues();
+      const jsonData = JSON.stringify(values);
+
+      // Replace the following with your backend API endpoint
+      fetch('/calculateProbability', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: jsonData
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Data submitted:', data);
+        // Add any additional logic or UI updates based on the server response
+      })
+      .catch(error => {
+        console.error('Error submitting data:', error);
+        // Handle error cases
+      });
+    }
+
+    //submitButton.addEventListener('click', submitData);
+	//
+	// add this later after all nums are entered
+	//const data = {
+	//	linesLen: Number.parseFloat(document.getElementById("n").value) || -1,
+	//	needleLen: Number.parseFloat(document.getElementById("k").value) || -1,
+	//};
+	//const jsonData = JSON.stringify(data);
+	//console.log(jsonData);
+
+	// Send input to the server
+	//fetch("/calculateProbability", {
+	//	method: "POST",
+	//	headers: {"Content-Type":"application/json"},
+	//	body: jsonData
+	//})
+	//.then(response => {
+	//	if (!response.ok) {
+	//		throw new Error("Network response was not ok");
+	//	}
+	//	return response.json();
+	//})
+	//.then(data => {
+	//	console.log("Success", data);
+	//	document.getElementById("crossings").textContent = `Количество раз, когда иголка пересекла линию: ${data.crossings}`;
+	//	document.getElementById("crossingRate").textContent = `Вероятность пересечения иголкой линии: ${data.crossingRate}%`;
+	//
+	//
+	//	document.getElementById("dropRes").innerHTML = "";
+	//	for (const drop of data.drops){
+	//		const output = `Coordinates:         (${drop.coordsX}, ${drop.coordsY})<br/>
+	//						Angle (radian):          ${drop.angle}<br/>
+	//						Perpendicular Length: ${drop.perp}<br/>
+	//						Crossed Line:         ${drop.isCr}<br/><br/>`;
+	//		document.getElementById("dropRes").innerHTML += output;
+	//	}
+	//
+	//	// Draw the needles
+	//	drawNeedles(fc, data.drops, needleLen);
+	//})
+	//.catch((error) => console.error("Error:", error));
+})

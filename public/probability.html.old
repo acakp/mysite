@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Бернулли и Лаплас</title>
+	<meta charset="UTF-8" />
+  </head>
+  <body>
+	<p>[<a href="/index">На главную</a>]  [<a href="/drop">Бросание иголки</a>]   [<a href="https://github.com/acakp/mysite">github</a>]</p>
+	<h1>Решение задач на вероятности с помощью формул Бернулли и Муавра-Лапласа</h1>
+	<ul id="inputs">
+		<li>Сколько испытаний проводится? (n)<input id="n"></input></li>
+		<li>Сколько событий может произойти? (k)<input id="k"></input></li>
+	</ul>
+	<p>
+	<button id="submitButton">Далее</button>
+	<button id="clearButton">Очистить</button>
+	</p>
+
+	<p>
+	<span id="bernoulliResult"></span><br>
+	</p>
+
+	<hr>
+
+	<div id="dropRes" style="font-family:monospace;"></div>
+
+	<script src="/probability.js"></script>
+
+  </body>
+</html>
