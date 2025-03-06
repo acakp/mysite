@@ -44,13 +44,16 @@ document.getElementById("submitButton").addEventListener("click", () => {
 		document.getElementById("pi").textContent = `Число Пи: ${data.pi}`;
 		
 
-		document.getElementById("dropRes").innerHTML = "";
-		for (const drop of data.drops){
-			const output = `Coordinates:         (${drop.coordsX}, ${drop.coordsY})<br/>
-							Angle (radian):          ${drop.angle}<br/>
-							Perpendicular Length: ${drop.perp}<br/>
-							Crossed Line:         ${drop.isCr}<br/><br/>`;
-			document.getElementById("dropRes").innerHTML += output;
+		// with large iteration values, this greatly affects performance, so limit it to 100
+		if (iterations < 100) {
+			document.getElementById("dropRes").innerHTML = "";
+			for (const drop of data.drops){
+				const output = `Coordinates:         (${drop.coordsX}, ${drop.coordsY})<br/>
+								Angle (radian):          ${drop.angle}<br/>
+								Perpendicular Length: ${drop.perp}<br/>
+								Crossed Line:         ${drop.isCr}<br/><br/>`;
+				document.getElementById("dropRes").innerHTML += output;
+			}
 		}
 
 		// Draw the needles
