@@ -42,7 +42,7 @@ func calcHandler(w http.ResponseWriter, r *http.Request) {
 
 	// call our function with decoded json (data.Number)
 	dropOutput := DoNeedleDrop(data.LinesLen, data.NeedleLen, data.FieldLenX, data.FieldLenY, data.Iterations)
-	fmt.Println("dropOutput: ", dropOutput)
+	// fmt.Println("dropOutput: ", dropOutput)
 
 	// make response
 	w.Header().Set("Content-Type", "application/json")
@@ -59,7 +59,7 @@ func main() {
 	http.HandleFunc("/calculate", calcHandler)
 
 	// to use https
-	log.Fatal(http.ListenAndServeTLS(":443", "server.crt", "server.key", nil))
-	// fmt.Println("Good luck! Server is running at :80")
-	// log.Fatal(http.ListenAndServe(":80", nil))
+	// log.Fatal(http.ListenAndServeTLS(":443", "server.crt", "server.key", nil))
+	fmt.Println("Good luck! Server is running at :8080")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }

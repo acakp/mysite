@@ -19,6 +19,7 @@ type Output struct {
 	Crossings    int          `json:"crossings"`
 	CrossingRate float64      `json:"crossingRate"`
 	Drops        []dropResult `json:"drops"`
+	Pi           float64      `json:"pi"`
 }
 
 func DoNeedleDrop(linesLen, needleLen, fieldX, fieldY float64, iterations int) Output {
@@ -48,11 +49,11 @@ func DoNeedleDrop(linesLen, needleLen, fieldX, fieldY float64, iterations int) O
 		var needleCoords Coordinates
 		needleCoords.X = float64(rand.Int32N(int32(field.X))) + rand.Float64()
 		needleCoords.Y = float64(rand.Int32N(int32(field.Y))) + rand.Float64()
-		fmt.Println("needleCoords.Y: ", needleCoords.Y)
+		//fmt.Println("needleCoords.Y: ", needleCoords.Y)
 
 		// gen angle in radians 0 - pi/2 (0 to 90 degrees)
 		needleAngle := rand.Float64() * (math.Pi / 2)
-		fmt.Println("needleAngle: ", needleAngle)
+		//fmt.Println("needleAngle: ", needleAngle)
 
 		// determine coordinates of the lines
 		linesCount := int(field.X/linesLen) + 1
@@ -66,15 +67,15 @@ func DoNeedleDrop(linesLen, needleLen, fieldX, fieldY float64, iterations int) O
 		// to end of the needle
 		needlePerp := math.Cos(needleAngle) * (needleLen / 2)
 		needlePerpHor := math.Sin(needleAngle) * (needleLen / 2)
-		fmt.Println("needlePerp: ", needlePerp)
-		fmt.Println("needlePerpHor: ", needlePerpHor)
+		//fmt.Println("needlePerp: ", needlePerp)
+		//fmt.Println("needlePerpHor: ", needlePerpHor)
 
 		isCr := isCrossing(linesCoords, needlePerp, needleCoords.Y)
 		if isCr {
 			crossings++
 		}
-		fmt.Println(isCr)
-		fmt.Println("")
+		//fmt.Println(isCr)
+		//fmt.Println("")
 
 		result := dropResult{
 			NeedleCoordsX: needleCoords.X,
@@ -87,16 +88,21 @@ func DoNeedleDrop(linesLen, needleLen, fieldX, fieldY float64, iterations int) O
 		drops = append(drops, result)
 	}
 
-	fmt.Println("")
+	//fmt.Println("")
 	fmt.Println("number of iterations: ", iterations)
 	fmt.Println("times the needle crossed lines: ", crossings)
-	winrate := (float64(crossings) * 100) / float64(iterations)
-	fmt.Println("line crossing rate: ", winrate, "%")
+	winrate := float64(crossings) / float64(iterations)
+	fmt.Println("line crossing rate: ", winrate)
+
+	pi := (2 * needleLen) / (winrate * linesLen)
+	// the closer to pi, the more accurate the result.
+	fmt.Println("pi = ", pi)
 
 	// structs to return
 	output := Output{
 		Crossings:    crossings,
 		CrossingRate: winrate,
+		Pi:           pi,
 		Drops:        drops,
 	}
 
@@ -105,9 +111,9 @@ func DoNeedleDrop(linesLen, needleLen, fieldX, fieldY float64, iterations int) O
 
 func isCrossing(lines []float64, needlePerp, needleCoordsY float64) bool {
 	for i := 1; i < len(lines); i++ {
-		fmt.Println("lines[i]:", lines[i], "needleCoordsY: ", needleCoordsY+needlePerp)
+		//fmt.Println("lines[i]:", lines[i], "needleCoordsY: ", needleCoordsY+needlePerp)
 		if needleCoordsY < lines[i] {
-			fmt.Println("needleCoordsY < lines[i]")
+			//fmt.Println("needleCoordsY < lines[i]")
 			if needleCoordsY+needlePerp > lines[i] || needleCoordsY-needlePerp < lines[i-1] {
 				return true
 			} else {

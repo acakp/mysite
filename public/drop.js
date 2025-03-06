@@ -40,7 +40,8 @@ document.getElementById("submitButton").addEventListener("click", () => {
 	.then(data => {
 		console.log("Success", data);
 		document.getElementById("crossings").textContent = `Количество раз, когда иголка пересекла линию: ${data.crossings}`;
-		document.getElementById("crossingRate").textContent = `Вероятность пересечения иголкой линии: ${data.crossingRate}%`;
+		document.getElementById("crossingRate").textContent = `Вероятность пересечения иголкой линии: ${data.crossingRate}`;
+		document.getElementById("pi").textContent = `Число Пи: ${data.pi}`;
 		
 
 		document.getElementById("dropRes").innerHTML = "";
